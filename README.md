@@ -12,13 +12,22 @@ A custom Jetpack Compose image component with Coil for efficient image loading a
 - ✅ Optimized for Lazy Layouts (LazyColumn, LazyRow, LazyVerticalGrid)
 
 ## Installation
-Add the dependency to your `build.gradle`:
+You can download a jar from GitHub's [releases page](https://github.com/Ravidu-Vithana/compose-coil-image-viewer/releases).
 
-```groovy
+Or use Gradle
+
+```gradle
+repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation 'io.github.Ravidu-Vithana:compose-coil-image-viewer:0.1.0-alpha'
 }
 ```
+
 
 ## Usage
 
@@ -104,6 +113,9 @@ ImageViewer(
 | isCircular          | Boolean       | true               | Circular image shape                     |
 | containerSize       | Dp            | 80.dp              | Container size for non-full-width images |
 | fallbackIconSize    | Dp            | 30.dp              | Size of error/loading icons              |
+| aspectRatio         | Float         | 4f/3f              | Aspect ratio of the image                |
+| crossFade           | Boolean       | true               | Enables crossfade effect                 |
+| crossFadeDuration   | Int           | 300                | Specifies the crossfade effect duration  |
 
 ## Lazy Layout Optimization 🚀
 This component is specifically optimized for use with Compose Lazy layouts:
