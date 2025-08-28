@@ -1,14 +1,14 @@
 package com.ryvk.compose.coil
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 
@@ -64,28 +64,39 @@ private fun Content(
         contentScale = imageViewerProperties.contentScale,
     ) {
         val state = painter.state
-        when (state){
-            is AsyncImagePainter.State.Loading -> {
-                LoadingPlaceholder(
-                    fillMaxWidth = fillMaxWidth,
-                    containerSize = imageViewerProperties.containerSize,
-                    iconSize = imageViewerProperties.fallbackIconSize,
-                    isCircular = imageViewerProperties.isCircular,
-                )
-            }
-            is AsyncImagePainter.State.Error -> {
-                NoImage(
-                    containerSize = imageViewerProperties.containerSize,
-                    iconSize = imageViewerProperties.fallbackIconSize,
-                    isCircular = imageViewerProperties.isCircular
-                )
-            }
-            else -> {
-                Image(
-                    painter = painter,
-                    contentDescription = contentDescription,
-                    contentScale = imageViewerProperties.contentScale,
-                )
+
+        Crossfade (
+            targetState = state,
+            animationSpec = if (imageViewerProperties.crossFade) {
+                tween(durationMillis = imageViewerProperties.crossFadeDuration)
+            } else {
+                tween(durationMillis = 0)
+            },
+            label = "image_crossfade"
+        ) { currentState ->
+            when (currentState) {
+                is AsyncImagePainter.State.Loading -> {
+                    LoadingPlaceholder(
+                        fillMaxWidth = fillMaxWidth,
+                        containerSize = imageViewerProperties.containerSize,
+                        iconSize = imageViewerProperties.fallbackIconSize,
+                        isCircular = imageViewerProperties.isCircular,
+                    )
+                }
+                is AsyncImagePainter.State.Error -> {
+                    NoImage(
+                        containerSize = imageViewerProperties.containerSize,
+                        iconSize = imageViewerProperties.fallbackIconSize,
+                        isCircular = imageViewerProperties.isCircular
+                    )
+                }
+                else -> {
+                    Image(
+                        painter = painter,
+                        contentDescription = contentDescription,
+                        contentScale = imageViewerProperties.contentScale,
+                    )
+                }
             }
         }
     }

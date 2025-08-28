@@ -44,6 +44,7 @@ dependencies {
 
     // Coil dependency
     implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("br.com.devsrsouza.compose.icons:feather:1.1.1")
 
     // Optional testing dependencies
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.00"))
