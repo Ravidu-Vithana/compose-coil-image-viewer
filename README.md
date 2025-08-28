@@ -16,7 +16,7 @@ Add the dependency to your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'io.github.Ravidu-Vithana:compose-coil-image-viewer:1.0.0'
+    implementation 'io.github.Ravidu-Vithana:compose-coil-image-viewer:0.1.0-alpha'
 }
 ```
 
